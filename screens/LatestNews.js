@@ -1,14 +1,31 @@
 import React, { Component  }  from 'react';
-import { StyleSheet, Text, View, Image, WebView  } from 'react-native'; 
+import { StyleSheet, Text, View, Image, WebView, TouchableHighlight  } from 'react-native'; 
 
 import { Container, Header, Title, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon as NBIcon } from "native-base";
 
-export default class App extends React.Component {
+import { createStackNavigator } from 'react-navigation';
+
+
+
+
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+      </View>
+    );
+  }
+}
+
+
+class HomeScreen extends React.Component {
 	
   render() {
     return <Container>
         <Header />
         <Content>
+		<TouchableHighlight onPress={() => this.props.navigation.navigate('Details')}>
           <Card>
             <CardItem>
               <Left>
@@ -20,7 +37,9 @@ export default class App extends React.Component {
               </Left>
             </CardItem>
             <CardItem cardBody>
+			 
               <Image source={{uri: 'https://loremflickr.com/320/240'}} style={{height: 100, width: null, flex: 1}}/>
+			 
             </CardItem>
             <CardItem>
               <Left>
@@ -40,7 +59,7 @@ export default class App extends React.Component {
               </Right>
             </CardItem>
           </Card>
-		  
+		 </TouchableHighlight> 
 		  
 		  <Card>
             <CardItem>
@@ -204,6 +223,23 @@ export default class App extends React.Component {
 		  
         </Content>
       </Container>;
+  }
+}
+
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Details: DetailsScreen,
+  },
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
   }
 }
 
