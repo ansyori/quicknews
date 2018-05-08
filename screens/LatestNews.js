@@ -14,8 +14,8 @@ export default class App extends React.Component {
               <Left>
                 <Thumbnail source={{uri: 'https://picsum.photos/200/300'}} />
                 <Body>
-                  <Text>NativeBase</Text>
-                  <Text note>GeekyAnts</Text>
+                  <Text>Author</Text>
+                  <Text note>Subtitle</Text>
                 </Body>
               </Left>
             </CardItem>
