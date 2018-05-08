@@ -14,7 +14,7 @@ export default class App extends React.Component {
               <Left>
                 <Thumbnail source={{uri: 'https://picsum.photos/200/300'}} />
                 <Body>
-                  <Text>Author</Text>
+                  <Text>Author Name</Text>
                   <Text note>Subtitle</Text>
                 </Body>
               </Left>
