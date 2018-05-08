@@ -21,9 +21,13 @@ class DetailsScreen extends React.Component {
 
 class HomeScreen extends React.Component {
 	
+	 static navigationOptions = {
+		title: 'Latest News',
+  }	;
+	
   render() {
     return <Container>
-        <Header />
+
         <Content>
 		<TouchableHighlight onPress={() => this.props.navigation.navigate('Details')}>
           <Card>
