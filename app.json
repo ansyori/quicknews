@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Quick News",
+    "description": "Simple and quick news app",
+    "slug": "QuickNews",
+    "privacy": "public",
+    "sdkVersion": "27.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/newspaper.png",
+    "splash": {
+      "image": "./assets/newspaper.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.ansyori.simplenews"
+    },
+    "android": {
+      "package": "com.ansyori.simplenews"
+    }
+  }
+}
