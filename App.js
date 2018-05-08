@@ -17,6 +17,10 @@ function px2dp(px) {
 }
 
 import LatestNews from './screens/LatestNews';
+import Categories from './screens/Categories';
+import Pinned from './screens/Pinned';
+
+
 
 class TabHome extends Component {
   render() {
@@ -29,11 +33,7 @@ class TabHome extends Component {
 class TabProfile extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Profile
-        </Text>
-      </View>
+      <Categories />
     )
   }
 }
@@ -41,12 +41,7 @@ class TabProfile extends Component {
 class TabAku extends Component {
   render() {
     return (
-      <View style={styles.container}>
-         <Image
-          source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/cat.gif' }}
-          style={{ height: 140, width: 200 }}
-        />
-      </View>
+      <Pinned />
     )
   }
 }
@@ -104,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#a0c1f7',
+    backgroundColor: '#ffffff',
   },
   welcome: {
     fontSize: 20,
