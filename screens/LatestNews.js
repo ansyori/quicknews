@@ -1,9 +1,8 @@
 import React, { Component  }  from 'react';
-import { StyleSheet, Text, View, Image, WebView, TouchableHighlight  } from 'react-native'; 
-
+import { StyleSheet, Text, View, Image, WebView, TouchableHighlight,ListView, ActivityIndicator  } from 'react-native'; 
 import { Container, Header, Title, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon as NBIcon } from "native-base";
-
 import { createStackNavigator } from 'react-navigation';
+import { Config } from './screens/Config.js';
 
 
 
@@ -23,8 +22,77 @@ class HomeScreen extends React.Component {
 	
 	 static navigationOptions = {
 		title: 'Latest News',
-  }	;
+	}	;
+  
+   constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true
+    }
+  }
+  //https://newsapi.org/v2/everything?domains=wsj.com&apiKey=bcdfef41b6694d2c830112b65c5d3519
+  componentDidMount() {
+    return fetch(Config.api_ulr_sample)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson.articles),
+        }, function() {
+          // do something with new state
+        }); 
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  
+  render() {
+  const { navigate } = this.props.navigation;
+
 	
+    if (this.state.isLoading) {
+      return (
+        <View style={{flex: 1, paddingTop: 20}}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
+    return (
+	  <Container>
+       
+        <Content>
+          <Card>
+          <ListView 
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) =>
+		  
+		  <TouchableOpacity 		
+		 onPress={() =>
+          navigate('Details', { name: `${rowData.name}`,myvar:'wahhh keren',catid:`${rowData.source.id}` })
+        }
+		> 
+		  <CardItem>
+		      <Left>
+              <Thumbnail large  size={200} source={{ uri: rowData.urlToImage }} />
+              </Left>
+              <Left>
+			     <Button full info>
+                <Text style={{fontSize:20}}>{rowData.title}</Text>
+				</Button>
+              </Left>
+             </CardItem>
+		   
+		  </TouchableOpacity>}
+        />
+		</Card>
+        </Content>
+      </Container>
+    );
+  }
+	/*
   render() {
     return <Container>
 
@@ -227,7 +295,7 @@ class HomeScreen extends React.Component {
 		  
         </Content>
       </Container>;
-  }
+  } */
 }
 
 
@@ -242,6 +310,9 @@ const RootStack = createStackNavigator(
 );
 
 export default class App extends React.Component {
+	
+  
+	
   render() {
     return <RootStack />;
   }

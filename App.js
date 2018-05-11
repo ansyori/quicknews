@@ -8,6 +8,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Dimensions} from 'react-native'
 
+
 const deviceW = Dimensions.get('window').width
 
 const basePx = 375
@@ -19,7 +20,9 @@ function px2dp(px) {
 import LatestNews from './screens/LatestNews';
 import Categories from './screens/Categories';
 import Pinned from './screens/Pinned';
+import { Config } from './screens/Config.js';
 
+Config.api_ulr_sample = 'https://newsapi.org/v2/everything?domains=wsj.com&apiKey=bcdfef41b6694d2c830112b65c5d3519';
 
 
 class TabHome extends Component {
