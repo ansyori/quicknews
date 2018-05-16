@@ -1,5 +1,5 @@
 import React, { Component  }  from 'react';
-import { StyleSheet, Text, View, Image, WebView, TouchableHighlight, TouchableOpacity,ListView, ActivityIndicator  } from 'react-native'; 
+import { Alert,StyleSheet, Text, View, Image, WebView, TouchableHighlight, TouchableOpacity,ListView, ActivityIndicator,RefreshControl  } from 'react-native'; 
 import { Container, Header, Title, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon as NBIcon } from "native-base";
 import { createStackNavigator } from 'react-navigation';
 import { Config }  from './Config.js';
@@ -33,7 +33,8 @@ class HomeScreen extends React.Component {
    constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
+      isLoading: true,
+	  refreshing: false
     }
   }
   //https://newsapi.org/v2/everything?domains=wsj.com&apiKey=bcdfef41b6694d2c830112b65c5d3519
@@ -56,6 +57,43 @@ class HomeScreen extends React.Component {
       });
   }
   
+  reloadNews = () =>{
+	   
+	  return fetch(Config.api_ulr_sample)
+      .then((response) => response.json())
+      .then((responseJson) => {
+         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson["articles"]),
+        }, function() {
+          // do something with new state
+		  
+		  this.setState({'refreshing': false});
+        });  
+		console.log('parsing json');
+		console.log(responseJson["articles"]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+	   
+   };
+  
+  _onRefresh() {
+	
+	//Alert.alert('lagi refersh, hadeeeehhh');
+	  
+    this.setState({'refreshing': true});
+	this.setState({'isLoading': true});
+	
+    /* fetchData().then(() => {
+      this.setState({refreshing: false});
+    }); */
+	
+	this.reloadNews();
+  }
+  
   render() {
   const { navigate } = this.props.navigation;
 
@@ -69,11 +107,16 @@ class HomeScreen extends React.Component {
     }
 
     return (
-	  <Container>
-       
-        <Content>
-          <Card>
+
           <ListView 
+		  
+		   refreshControl={
+			  <RefreshControl
+				refreshing={this.state.refreshing}				
+				onRefresh={this._onRefresh.bind(this)}
+			  />
+			}
+		  
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
 		  
@@ -114,9 +157,7 @@ class HomeScreen extends React.Component {
 		   : null}
 		  </TouchableOpacity>}
         />
-		</Card>
-        </Content>
-      </Container>
+		
     );
   }
 	
@@ -134,9 +175,6 @@ const RootStack = createStackNavigator(
 );
 
 export default class App extends React.Component {
-	
-  
-	
   render() {
     return <RootStack />;
   }
