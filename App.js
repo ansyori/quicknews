@@ -20,9 +20,9 @@ function px2dp(px) {
 import LatestNews from './screens/LatestNews';
 import Categories from './screens/Categories';
 import Pinned from './screens/Pinned';
-import { Config } from './screens/Config.js';
+import { Config } from './screens/Config';
 
-Config.api_ulr_sample = 'https://newsapi.org/v2/everything?domains=wsj.com&apiKey=bcdfef41b6694d2c830112b65c5d3519';
+Config.api_ulr_sample = 'https://newsapi.org/v2/top-headlines?country=id&apiKey=bcdfef41b6694d2c830112b65c5d3519';
 
 
 class TabHome extends Component {
