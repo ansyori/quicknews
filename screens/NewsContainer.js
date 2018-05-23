@@ -1,8 +1,10 @@
 import React, { Component  }  from 'react';
-import { Alert,StyleSheet, Text, View, Image, WebView, TouchableHighlight, TouchableOpacity,ListView, ActivityIndicator,RefreshControl  } from 'react-native'; 
-import { Container, Header, Title, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon as NBIcon } from "native-base";
-import { createStackNavigator } from 'react-navigation';
+import { Modal, Alert,StyleSheet, Text, View, Image,  TouchableHighlight, TouchableOpacity,ListView, ActivityIndicator,RefreshControl  } from 'react-native'; 
+import { Container, Header, Title,Subtitle, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon, Text as NBText } from "native-base";
+
 import { Config }  from './Config.js';
+
+import { WebView } from 'react-native';
 
 
 
@@ -16,7 +18,7 @@ class DetailsScreen extends React.Component {
   render() {
     return (
      <WebView
-        source={{uri: `${this.props.navigation.state.params.sourceUrl}`}}
+        /* source={{uri: `${this.props.navigation.state.params.sourceUrl}`}} */
         style={{marginTop: 5}}
       />
     );
@@ -24,7 +26,7 @@ class DetailsScreen extends React.Component {
 }
 
 
-class HomeScreen extends React.Component {
+export default class App extends React.Component {
 	
 	 static navigationOptions = {
 		title: 'Latest News',
@@ -34,12 +36,31 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-	  refreshing: false
+	  refreshing: false,
+	  modalVisible: false,
+	  currentWebViewUrl:'https://www.google.co.id/',
+	  currentTitle:''
+	  
     }
   }
+  
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+  setWebview(WVurl) {
+    this.setState({currentWebViewUrl: WVurl});
+  }
+  
+  setJudul(WVurl) {
+    this.setState({currentTitle: WVurl});
+  }
+  
+  
+  
+  
   //https://newsapi.org/v2/everything?domains=wsj.com&apiKey=bcdfef41b6694d2c830112b65c5d3519
   componentDidMount() {
-    return fetch(Config.api_ulr_sample)
+    return fetch('https://newsapi.org/v2/top-headlines?country=id&category='+`${this.props.kategori}`+'&apiKey=bcdfef41b6694d2c830112b65c5d3519')
       .then((response) => response.json())
       .then((responseJson) => {
          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -95,7 +116,7 @@ class HomeScreen extends React.Component {
   }
   
   render() {
-  const { navigate } = this.props.navigation;
+  //const { navigate } = this.props.navigation;
 
 	
     if (this.state.isLoading) {
@@ -107,6 +128,65 @@ class HomeScreen extends React.Component {
     }
 
     return (
+	<View>
+	
+	<Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+         
+ 
+			
+			<Container>
+				<Header>
+				<Left>
+		 
+					  <Button transparent onPress={() => {
+						  this.setModalVisible(!this.state.modalVisible);
+						}}>
+					 
+						 <Icon name='arrow-back' />
+					  
+					  </Button>
+					   
+					   
+					   
+					   
+				</Left>
+				
+				
+				 <Body>
+					<Title>{this.state.currentTitle}</Title>
+				  </Body>
+				  
+				<Right />
+				
+		 
+				
+				</Header>
+				<Content>
+		
+				   <WebView
+						 source={{uri: `${this.state.currentWebViewUrl}`}}
+						
+						style={{
+							height: 8000,
+							width: '100%'
+						}}
+									  
+						  
+						  />
+					  
+	
+				</Content>
+			  </Container>
+			
+        
+        </Modal>
+	
 
           <ListView 
 		  
@@ -121,9 +201,19 @@ class HomeScreen extends React.Component {
           renderRow={(rowData) =>
 		  
 		  <TouchableOpacity 		
-		 onPress={() =>
+		 /* onPress={() =>
           navigate('Details', { name: `${rowData.title}`,myvar:'wahhh keren',catid:`${rowData.title}`,sourceUrl:`${rowData.url}` })
-        }
+        } */
+		
+		
+		onPress={() => {
+            this.setModalVisible(true);
+			this.setWebview(`${rowData.url}`);
+			this.setJudul(`${rowData.title}`);
+			
+			
+          }}
+		
 		> 
 		
 		{rowData.urlToImage ?
@@ -157,26 +247,11 @@ class HomeScreen extends React.Component {
 		   : null}
 		  </TouchableOpacity>}
         />
+	</View>
 		
     );
   }
 	
 }
 
-
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Details: DetailsScreen,
-  },
-  {
-    initialRouteName: 'Home',
-  }
-);
-
-export default class App extends React.Component {
-  render() {
-    return <RootStack />;
-  }
-}
 

@@ -2,7 +2,7 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://h4-yur.ansyori.blanknews.exp.direct",
   "packagerNgrokUrl": "https://packager.h4-yur.ansyori.blanknews.exp.direct",
-  "ngrokPid": 5824,
+  "ngrokPid": 7092,
   "packagerPort": 19001,
-  "packagerPid": 11932
+  "packagerPid": 1060
 }

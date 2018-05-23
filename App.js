@@ -18,7 +18,9 @@ function px2dp(px) {
 }
 
 import LatestNews from './screens/LatestNews';
-import Categories from './screens/Categories';
+//import Categories from './screens/Categories';
+import Categories from './screens/CategoryTab';
+
 import Pinned from './screens/Pinned';
 import { Config } from './screens/Config';
 
