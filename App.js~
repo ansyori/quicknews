@@ -1,0 +1,140 @@
+import React, { Component  }  from 'react';
+import { StyleSheet, Text, View, Image, WebView  } from 'react-native'; 
+import { StackNavigator, DrawerNavigator } from "react-navigation";
+
+import { Container, Header, Title, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon as NBIcon } from "native-base";
+
+
+import TabNavigator from 'react-native-tab-navigator';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import {Dimensions} from 'react-native'
+
+
+const deviceW = Dimensions.get('window').width
+
+const basePx = 375
+
+function px2dp(px) {
+  return px *  deviceW / basePx
+}
+
+import LatestNews from './screens/LatestNews';
+//import Categories from './screens/Categories';
+import Categories from './screens/CategoryTab';
+
+import Pinned from './screens/Pinned';
+import { Config } from './screens/Config';
+
+Config.api_ulr_sample = 'https://newsapi.org/v2/top-headlines?country=id&apiKey=bcdfef41b6694d2c830112b65c5d3519';
+
+
+class TabHome extends Component {
+  render() {
+    return (
+      <View style={styles.container}><Text>Latest News</Text></View>
+    )
+  }
+}
+
+class TabProfile extends Component {
+  render() {
+    return (
+       <View><Text>Kategori News</Text></View>
+    )
+  }
+}
+
+class TabAku extends Component {
+  render() {
+    return (
+      <Pinned />
+    )
+  }
+}
+
+const MyApp = DrawerNavigator({
+  Home: {
+    screen: TabHome,
+  },
+  Notifications: {
+    screen: TabAku,
+  },
+});
+
+
+export default class App extends React.Component {
+   render(){
+       return (
+      <MyApp />
+    )
+   }
+}
+
+
+/*
+
+export default class App extends React.Component {
+	
+	 static navigationOptions = {
+    title: 'Home',
+  };
+	
+	state= {
+    selectedTab: 'tabhome'
+  };
+  render() {
+    return <TabNavigator style={styles.container} headerTitle ="Latest News">
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'tabhome'}
+          title="Latest News"
+          selectedTitleStyle={{color: "#0678db"}}
+          renderIcon={() => <Icon name="newspaper-o" size={px2dp(22)} color="#666"/>}
+          renderSelectedIcon={() => <Icon name="newspaper-o" size={px2dp(22)} color="#0678db"/>}
+          onPress={() => this.setState({selectedTab: 'tabhome'})}>
+		  
+		  
+		  
+          <TabHome/>
+        </TabNavigator.Item>
+		
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'tabprofile'}
+          title="Categories"
+          selectedTitleStyle={{color: "#0678db"}}
+          renderIcon={() => <Icon name="book" size={px2dp(22)} color="#666"/>}
+          renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#0678db"/>}
+          onPress={() => this.setState({selectedTab: 'tabprofile'})}>
+          <TabProfile/>
+        </TabNavigator.Item>
+		
+		<TabNavigator.Item
+          selected={this.state.selectedTab === 'tabaku'}
+          title="Pinned"
+          selectedTitleStyle={{color: "#0678db"}}
+          renderIcon={() => <Icon name="thumb-tack" size={px2dp(22)} color="#666"/>}
+          renderSelectedIcon={() => <Icon name="thumb-tack" size={px2dp(22)} color="#0678db"/>}
+          onPress={() => this.setState({selectedTab: 'tabaku'})}>
+          <TabAku/>
+        </TabNavigator.Item>
+      </TabNavigator>;
+  }
+} */
+
+const styles = StyleSheet.create({
+ container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
