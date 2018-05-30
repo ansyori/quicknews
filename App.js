@@ -1,7 +1,7 @@
 import React, { Component  }  from 'react';
 
 import { Alert,StyleSheet, Text, View, Image, WebView, TouchableHighlight, TouchableOpacity,ListView, ActivityIndicator,RefreshControl  } from 'react-native'; 
-import { createStackNavigator, createDrawerNavigator } from "react-navigation";
+import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from "react-navigation";
 
 import { Container, Header, Title, Content, Button,  Card, CardItem,  Body, Left, Right, Thumbnail, Icon as NBIcon } from "native-base";
 
@@ -22,6 +22,10 @@ function px2dp(px) {
 import LatestNews from './screens/LatestNews';
 //import Categories from './screens/Categories';
 import Categories from './screens/CategoryTab';
+
+import NewsContainer from './screens/NewsContainer';
+import NewLatestNews from './screens/NewLatestNews';
+
 
 import Pinned from './screens/Pinned';
 import { Config } from './screens/Config';
@@ -99,7 +103,7 @@ class DetailsScreen extends React.Component {
 class HomeScreen extends React.Component {
   
    static navigationOptions = {
-    title: 'Latest News',
+    title: 'Berita Terkini',
   } ;
   
    constructor(props) {
@@ -191,14 +195,9 @@ class HomeScreen extends React.Component {
      
           </Left>
           <Body>
-            <Title>Latest News</Title>
+            <Title>Berita Terkini</Title>
           </Body>
-          <Right>
-          
-            <Button transparent>
-              <NBIcon name='search' />
-            </Button>
-          </Right>
+         <Right />
         </Header>
 
         <Content>
@@ -261,20 +260,232 @@ class HomeScreen extends React.Component {
   
 }
 
+class Teknologi extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Teknologi</Title>
+          </Body>
+          <Right />
+        </Header>
+	<Content>
+    <NewsContainer kategori="technology" />
+	</Content>
+	</Container>
+    );
+  }
+}
+
+
+class Politik extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Politik</Title>
+          </Body>
+		 <Right />
+        </Header>
+	<Content>
+    <NewsContainer kategori="politics" />
+	</Content>
+	</Container>
+    );
+  }
+}
+
+class Sains extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Sains</Title>
+          </Body>
+		 <Right />
+        </Header>
+	<Content>
+    <NewsContainer kategori="science" />
+	</Content>
+	</Container>
+    );
+  }
+}
+
+class Bisnis extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Bisinis</Title>
+          </Body>
+		 <Right />
+        </Header>
+	<Content>
+    <NewsContainer kategori="business" />
+	</Content>
+	</Container>
+    );
+  }
+}
+
+class Kesehatan extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Kesehatan</Title>
+          </Body>
+		 <Right />
+        </Header>
+	<Content>
+    <NewsContainer kategori="health" />
+	</Content>
+	</Container>
+    );
+  }
+}
+
+
+class Hiburan extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Hiburan</Title>
+          </Body>
+		 <Right />
+        </Header>
+	<Content>
+    <NewsContainer kategori="entertainment" />
+	</Content>
+	</Container>
+    );
+  }
+}
+
+class Terbaru extends React.Component {
+  
+  render() {
+    return (
+	<Container>
+        <Header>
+          <Left>
+    
+            <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+              <NBIcon name='menu' />
+            </Button>
+
+     
+          </Left>
+          <Body>
+            <Title>Berita Terkini</Title>
+          </Body>
+		 <Right />
+        </Header>
+	<Content>
+    <NewLatestNews/>
+	</Content>
+	</Container>
+    );
+  }
+}
+
 
 
 const MyApp = createDrawerNavigator({
-  Home: {
-    screen: HomeScreen,
+  Terbaru: {
+    screen: Terbaru,
   },
-  Notifications: {
-    screen: TabAku,
+  Teknologi: {
+    screen: Teknologi,
   },
-  Details: {
-    screen: TabAku,
+  Bisnis: {
+    screen: Bisnis,
   },
 
-});
+  Politik: {
+    screen: Politik,
+  },
+  
+  Sains: {
+    screen: Sains,
+  },
+  Kesehatan: {
+    screen: Kesehatan,
+  },
+  
+  Hiburan: {
+    screen: Hiburan,
+  }
+  
+  
+},
+{
+  // define customComponent here
+  //contentComponent: DrawerContent,
+}
+);
 
 
 const RootStack = createStackNavigator(
@@ -286,6 +497,34 @@ const RootStack = createStackNavigator(
     initialRouteName: 'Home',
   }
 );
+
+const DrawerContent = (props) => (
+  <View>
+    <View
+      style={{
+        backgroundColor: '#f50057',
+        height: 140,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Text style={{ color: 'white', fontSize: 30 }}>
+        Header
+      </Text>
+    </View>
+    <DrawerItems {...props} />
+  </View>
+)
+
+
+const CustomDrawerContentComponent = (props) => (
+  <ScrollView>
+    <SafeAreaView   forceInset={{ top: 'always', horizontal: 'never' }}>
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+);
+
 
 
 export default class App extends React.Component {
